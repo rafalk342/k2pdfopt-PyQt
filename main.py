@@ -1,4 +1,5 @@
 import asyncio
+import subprocess
 import sys
 from PyQt5 import QtWidgets, QtCore
 from PyQt5.QtWidgets import QFileDialog
@@ -35,9 +36,10 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.reFlowTextCheckBox.stateChanged.connect(
             lambda: self.checkbox_changed(self.reFlowTextCheckBox, '-wrap'))
         self.eraseVerticalLinesCheckBox.stateChanged.connect(
-            lambda: self.checkbox_changed(self.eraseVerticalLinesCheckBox, '-evl'))
+            lambda: self.checkbox_changed(self.eraseVerticalLinesCheckBox, '-evl 1'))
         self.options = {'-dev': ''}
         self.arguments = set()
+        self.tabWidget.setCurrentIndex(0)
 
     def choose_file(self):
         file_path, _ = QFileDialog.getOpenFileName(self, 'Open file', './',
@@ -48,6 +50,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         # TODO file_path = self.inputFilePath.text()
         self.logText.clear()
         file_path = '/home/cst/code/k2pdfopt_PyQt/1.pdf'
+        opt_file_path = '/home/cst/code/k2pdfopt_PyQt/1_k2opt.pdf'
         parsed_options = []
         for option, value in self.options.items():
             if value:
@@ -56,8 +59,9 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         print('Converting file {}'.format(file_path))
         asyncio.run_coroutine_threadsafe(run_command_on_file(list(self.arguments), parsed_options, file_path,
                                                              lambda text: self.logText.appendPlainText(text),
-                                                             lambda status: print('Got status {}'.format(status))),
+                                                             lambda status: subprocess.run(['xdg-open', opt_file_path])),
                                          event_loop)
+        self.tabWidget.setCurrentIndex(3)
 
     def device_changed(self, index):
         text = self.deviceComboBox.itemText(index)
