@@ -17,7 +17,7 @@
    <widget class="QPushButton" name="chooseFileButton">
     <property name="geometry">
      <rect>
-      <x>170</x>
+      <x>200</x>
       <y>20</y>
       <width>89</width>
       <height>25</height>
@@ -32,7 +32,7 @@
      <rect>
       <x>20</x>
       <y>20</y>
-      <width>141</width>
+      <width>171</width>
       <height>25</height>
      </rect>
     </property>
@@ -46,8 +46,8 @@
    <widget class="QPushButton" name="convertFileButton">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>60</y>
+      <x>10</x>
+      <y>130</y>
       <width>89</width>
       <height>25</height>
      </rect>
@@ -70,6 +70,29 @@
     </property>
     <property name="placeholderText">
      <string>Log...</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="deviceLabel">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>60</y>
+      <width>67</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Device:</string>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="deviceComboBox">
+    <property name="geometry">
+     <rect>
+      <x>80</x>
+      <y>60</y>
+      <width>131</width>
+      <height>21</height>
+     </rect>
     </property>
    </widget>
   </widget>
