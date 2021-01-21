@@ -6,34 +6,21 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>598</width>
-    <height>575</height>
+    <width>1048</width>
+    <height>700</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QPushButton" name="convertFileButton">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>330</y>
-      <width>89</width>
-      <height>25</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Convert</string>
-    </property>
-   </widget>
    <widget class="QPlainTextEdit" name="logText">
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>370</y>
-      <width>541</width>
-      <height>161</height>
+      <y>480</y>
+      <width>1041</width>
+      <height>171</height>
      </rect>
     </property>
     <property name="readOnly">
@@ -48,8 +35,8 @@
      <rect>
       <x>0</x>
       <y>50</y>
-      <width>153</width>
-      <height>51</height>
+      <width>261</width>
+      <height>31</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -106,9 +93,9 @@
    <widget class="QWidget" name="verticalLayoutWidget">
     <property name="geometry">
      <rect>
-      <x>280</x>
-      <y>0</y>
-      <width>269</width>
+      <x>570</x>
+      <y>20</y>
+      <width>271</width>
       <height>373</height>
      </rect>
     </property>
@@ -135,6 +122,13 @@
       </widget>
      </item>
      <item>
+      <widget class="QCheckBox" name="landscapeCheckBox">
+       <property name="text">
+        <string>Rotate output to landscape</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QCheckBox" name="nativePDFOutputCheckBox">
        <property name="text">
         <string>Native PDF output</string>
@@ -145,13 +139,6 @@
       <widget class="QCheckBox" name="rightToLeftCheckBox">
        <property name="text">
         <string>Right to left text</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QCheckBox" name="postProcessWithGhostScriptCheckBox">
-       <property name="text">
-        <string>Post process with GhostScript</string>
        </property>
       </widget>
      </item>
@@ -176,35 +163,31 @@
        </property>
       </widget>
      </item>
-     <item>
-      <widget class="QCheckBox" name="eraseHorizontalLinesCheckBox">
-       <property name="text">
-        <string>Erase horizonal lines</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QCheckBox" name="avoidTextSelectionOverlapCheckBox">
-       <property name="text">
-        <string>Avoid text selection overlap</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QCheckBox" name="ignoreSmallDefectsCheckBox">
-       <property name="text">
-        <string>Ignore small defects</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QCheckBox" name="autoCropCheckBox">
-       <property name="text">
-        <string>Auto-crop</string>
-       </property>
-      </widget>
-     </item>
     </layout>
+   </widget>
+   <widget class="QWidget" name="verticalLayoutWidget_2">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>130</y>
+      <width>281</width>
+      <height>241</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout_2"/>
+   </widget>
+   <widget class="QPushButton" name="convertFileButton">
+    <property name="geometry">
+     <rect>
+      <x>70</x>
+      <y>90</y>
+      <width>111</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Convert</string>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -212,7 +195,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>598</width>
+     <width>1048</width>
      <height>22</height>
     </rect>
    </property>

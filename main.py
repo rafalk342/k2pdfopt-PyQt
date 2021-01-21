@@ -24,26 +24,18 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             lambda: self.checkbox_changed(self.breakAfterEachCheckBox, '-bp'))
         self.colorOutputCheckBox.stateChanged.connect(
             lambda: self.checkbox_changed(self.colorOutputCheckBox, '-c'))
+        self.landscapeCheckBox.stateChanged.connect(
+            lambda: self.checkbox_changed(self.landscapeCheckBox, '-ls'))
         self.nativePDFOutputCheckBox.stateChanged.connect(
             lambda: self.checkbox_changed(self.nativePDFOutputCheckBox, '-n'))
         self.rightToLeftCheckBox.stateChanged.connect(
             lambda: self.checkbox_changed(self.rightToLeftCheckBox, '-r'))
-        self.postProcessWithGhostScriptCheckBox.stateChanged.connect(
-            lambda: self.checkbox_changed(self.postProcessWithGhostScriptCheckBox, '-ppgs'))
         self.generateMarkedUpSourceCheckBox.stateChanged.connect(
             lambda: self.checkbox_changed(self.generateMarkedUpSourceCheckBox, '-sm'))
         self.reFlowTextCheckBox.stateChanged.connect(
             lambda: self.checkbox_changed(self.reFlowTextCheckBox, '-wrap'))
         self.eraseVerticalLinesCheckBox.stateChanged.connect(
             lambda: self.checkbox_changed(self.eraseVerticalLinesCheckBox, '-evl'))
-        self.eraseHorizontalLinesCheckBox.stateChanged.connect(
-            lambda: self.checkbox_changed(self.eraseHorizontalLinesCheckBox, '-ehl'))
-        self.avoidTextSelectionOverlapCheckBox.stateChanged.connect(
-            lambda: self.checkbox_changed(self.avoidTextSelectionOverlapCheckBox, '-bpm'))
-        self.ignoreSmallDefectsCheckBox.stateChanged.connect(
-            lambda: self.checkbox_changed(self.ignoreSmallDefectsCheckBox, '-de'))
-        self.autoCropCheckBox.stateChanged.connect(
-            lambda: self.checkbox_changed(self.autoCropCheckBox, '-ac'))
         self.options = {'-dev': ''}
         self.arguments = set()
 
