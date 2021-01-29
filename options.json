@@ -1,0 +1,80 @@
+{
+    "-as": {
+        "name": "Autostraighten",
+        "active": false,
+        "type": "TOGGLE"
+    },
+    "-bp": {
+        "name": "Break pages after each source page",
+        "active": false,
+        "type": "TOGGLE"
+    },
+    "-c": {
+        "name": "Color output",
+        "active": false,
+        "type": "TOGGLE"
+    },
+    "-ls": {
+        "name": "Rotate output to landscape",
+        "active": false,
+        "type": "TOGGLE"
+    },
+    "-n": {
+        "name": "Native PDF output",
+        "active": false,
+        "type": "TOGGLE"
+    },
+    "-r": {
+        "name": "Right to left text",
+        "active": false,
+        "type": "TOGGLE"
+    },
+    "-sm": {
+        "name": "Generate marked-up source",
+        "active": false,
+        "type": "TOGGLE"
+    },
+    "-wrap": {
+        "name": "Re-flow text",
+        "active": false,
+        "type": "TOGGLE"
+    },
+    "-evl 1": {
+        "name": "Erase vertical lines",
+        "active": false,
+        "type": "TOGGLE"
+    },
+    "-col": {
+        "name": "Max columns",
+        "active": false,
+        "value": "2",
+        "type": "DEFAULT"
+    },
+    "-dr": {
+        "name": "Document resolution factor",
+        "active": false,
+        "value": "2.0",
+        "type": "DEFAULT"
+    },
+    "-p": {
+        "name": "Page range",
+        "active": true,
+        "value": "",
+        "type": "DEFAULT"
+    },
+    "-m": {
+        "name": "Crop margins",
+        "active": true,
+        "left": "1.00",
+        "right": "2.0",
+        "top": "10.0",
+        "bottom": "0.0",
+        "type": "MARGIN"
+    },
+    "-dev": {
+        "name": "Device",
+        "active": false,
+        "value": 0,
+        "type": "DEVICE"
+    }
+}
