@@ -20,24 +20,41 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.deviceComboBox.setModel(DeviceComboBoxModel())
         self.deviceComboBox.activated.connect(self.device_changed)
         self.autostraightenCheckBox.stateChanged.connect(
-            lambda: self.checkbox_changed(self.autostraightenCheckBox, '-as'))
+            lambda: self.arg_checkbox_changed(self.autostraightenCheckBox, '-as'))
         self.breakAfterEachCheckBox.stateChanged.connect(
-            lambda: self.checkbox_changed(self.breakAfterEachCheckBox, '-bp'))
+            lambda: self.arg_checkbox_changed(self.breakAfterEachCheckBox, '-bp'))
         self.colorOutputCheckBox.stateChanged.connect(
-            lambda: self.checkbox_changed(self.colorOutputCheckBox, '-c'))
+            lambda: self.arg_checkbox_changed(self.colorOutputCheckBox, '-c'))
         self.landscapeCheckBox.stateChanged.connect(
-            lambda: self.checkbox_changed(self.landscapeCheckBox, '-ls'))
+            lambda: self.arg_checkbox_changed(self.landscapeCheckBox, '-ls'))
         self.nativePDFOutputCheckBox.stateChanged.connect(
-            lambda: self.checkbox_changed(self.nativePDFOutputCheckBox, '-n'))
+            lambda: self.arg_checkbox_changed(self.nativePDFOutputCheckBox, '-n'))
         self.rightToLeftCheckBox.stateChanged.connect(
-            lambda: self.checkbox_changed(self.rightToLeftCheckBox, '-r'))
+            lambda: self.arg_checkbox_changed(self.rightToLeftCheckBox, '-r'))
         self.generateMarkedUpSourceCheckBox.stateChanged.connect(
-            lambda: self.checkbox_changed(self.generateMarkedUpSourceCheckBox, '-sm'))
+            lambda: self.arg_checkbox_changed(self.generateMarkedUpSourceCheckBox, '-sm'))
         self.reFlowTextCheckBox.stateChanged.connect(
-            lambda: self.checkbox_changed(self.reFlowTextCheckBox, '-wrap'))
+            lambda: self.arg_checkbox_changed(self.reFlowTextCheckBox, '-wrap'))
         self.eraseVerticalLinesCheckBox.stateChanged.connect(
-            lambda: self.checkbox_changed(self.eraseVerticalLinesCheckBox, '-evl 1'))
-        self.options = {'-dev': ''}
+            lambda: self.arg_checkbox_changed(self.eraseVerticalLinesCheckBox, '-evl 1'))
+        self.maxColumnsCheckBox.stateChanged.connect(
+            lambda: self.option_checkbox_changed(self.maxColumnsCheckBox, '-col', self.maxColumnsLineEdit.text()))
+        self.maxColumnsLineEdit.textChanged.connect(
+            lambda: self.option_line_edit_changed('-col', self.maxColumnsLineEdit.text()))
+        self.resolutionFactorCheckBox.stateChanged.connect(
+            lambda: self.option_checkbox_changed(self.resolutionFactorCheckBox, '-dr',
+                                                 self.resolutionFactorLineEdit.text()))
+        self.resolutionFactorLineEdit.textChanged.connect(
+            lambda: self.option_line_edit_changed('-dr', self.resolutionFactorLineEdit.text()))
+        self.pageRangeLineEdit.textChanged.connect(
+            lambda: self.option_line_edit_changed('-p', self.pageRangeLineEdit.text())
+        )
+        self.cropMarginCheckBox.stateChanged.connect(lambda: self.option_checkbox_changed(self.cropMarginCheckBox, '-m', self.get_margin_option_value()))
+        self.leftMarginLineEdit.textChanged.connect(lambda: self.option_line_edit_changed('-m', self.get_margin_option_value()))
+        self.topMarginLineEdit.textChanged.connect(lambda: self.option_line_edit_changed('-m', self.get_margin_option_value()))
+        self.rightMarginLineEdit.textChanged.connect(lambda: self.option_line_edit_changed('-m', self.get_margin_option_value()))
+        self.bottomMarginLineEdit.textChanged.connect(lambda: self.option_line_edit_changed('-m', self.get_margin_option_value()))
+        self.options = {'-dev': '', '-p': ''}
         self.arguments = set()
         self.tabWidget.setCurrentIndex(0)
 
@@ -59,7 +76,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         print('Converting file {}'.format(file_path))
         asyncio.run_coroutine_threadsafe(run_command_on_file(list(self.arguments), parsed_options, file_path,
                                                              lambda text: self.logText.appendPlainText(text),
-                                                             lambda status: subprocess.run(['xdg-open', opt_file_path])),
+                                                             lambda status: subprocess.run(
+                                                                 ['xdg-open', opt_file_path])),
                                          event_loop)
         self.tabWidget.setCurrentIndex(3)
 
@@ -69,13 +87,30 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         print('User chose {} which corresponds to {}'.format(text, data))
         self.options['-dev'] = data
 
-    def checkbox_changed(self, checkbox, argument):
+    def arg_checkbox_changed(self, checkbox, argument):
         if checkbox.isChecked():
             print('Adding {} to arguments'.format(argument))
             self.arguments.add(argument)
         else:
             print('Removing {} from arguments'.format(argument))
             self.arguments.remove(argument)
+
+    def option_checkbox_changed(self, option_checkbox, option_name, option_value):
+        if option_checkbox.isChecked():
+            print('Adding {} to options with value {}'.format(option_name, option_value))
+            self.options[option_name] = option_value
+        else:
+            print('Removing {} from options'.format(option_name))
+            del self.options[option_name]
+
+    def option_line_edit_changed(self, option_name, option_value):
+        if option_name in self.options:
+            print('Changing option {} to {}'.format(option_name, option_value))
+            self.options[option_name] = option_value
+
+    def get_margin_option_value(self):
+        return '{}px,{}px,{}px,{}px'.format(self.leftMarginLineEdit.text(), self.topMarginLineEdit.text(),
+                                            self.rightMarginLineEdit.text(), self.bottomMarginLineEdit.text())
 
 
 if __name__ == "__main__":
