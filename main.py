@@ -7,6 +7,7 @@ from qasync import QEventLoop
 
 from MainWindow import Ui_MainWindow
 from Options import Options
+from Preview import Preview
 from models.DeviceComboBoxModel import DeviceComboBoxModel
 from utils import run_command_on_file
 
@@ -26,6 +27,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.deviceComboBox.setCurrentIndex(self.options.get_device_index())
         self.deviceComboBox.activated.connect(self.device_changed)
         self.tabWidget.setCurrentIndex(0)
+        self.preview = Preview()
+        self.previewButton.clicked.connect(self.handle_preview_button_clicked)
 
     def set_up_toggles(self):
         toggles_map = {
@@ -99,6 +102,21 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                                                                  ['xdg-open', opt_file_path])),
                                          event_loop)
         self.tabWidget.setCurrentIndex(3)
+
+    def handle_preview_button_clicked(self):
+        self.logText.clear()
+        page = self.previewLineEdit.text()
+        self.imagePreview.setText('Loading preview...')
+        file_path = '/home/cst/code/k2pdfopt_PyQt/1.pdf'
+        parsed_options = self.options.get_parsed_options(self.deviceComboBox)
+        parsed_options.append('-bmp {}'.format(page))
+
+        print('Converting file {}'.format(file_path))
+        print('Parsed options {}'.format(parsed_options))
+        asyncio.run_coroutine_threadsafe(run_command_on_file(parsed_options, file_path,
+                                                             lambda text: self.logText.appendPlainText(text),
+                                                             lambda status: self.imagePreview.setPixmap(self.preview.generate_preview())),
+                                         event_loop)
 
     def device_changed(self, index):
         text = self.deviceComboBox.itemText(index)

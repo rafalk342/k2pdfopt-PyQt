@@ -45,7 +45,9 @@ class Options:
         parsed_options = []
         for option_name, option_dict in self.options_json.items():
             if option_dict['active']:
-                if option_dict['type'] == self.OPTION_TYPE_DEFAULT and option_dict['value']:
+                if option_dict['type'] == self.OPTION_TYPE_TOGGLE:
+                    parsed_options.append(option_name)
+                elif option_dict['type'] == self.OPTION_TYPE_DEFAULT and option_dict['value']:
                     parsed_options.append(option_name)
                     parsed_options.append(option_dict['value'])
                 elif option_dict['type'] == self.OPTION_TYPE_MARGIN:
