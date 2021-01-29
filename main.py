@@ -1,34 +1,35 @@
 import asyncio
-import subprocess
 import sys
+
 from PyQt5 import QtWidgets, QtCore
 from PyQt5.QtWidgets import QFileDialog
 from qasync import QEventLoop
 
 from MainWindow import Ui_MainWindow
-from Options import Options
-from Preview import Preview
+from converter import Converter
 from models.DeviceComboBoxModel import DeviceComboBoxModel
-from utils import run_command_on_file
+from options import Options
+from preview import Preview
 
 
 class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
-    def __init__(self):
+    def __init__(self, event_loop):
         QtWidgets.QMainWindow.__init__(self)
         Ui_MainWindow.__init__(self)
         self.setupUi(self)
-        self.options = Options()
+        self.options = Options(self.deviceComboBox)
+        self.converter = Converter(event_loop, self.logText, self.options, self.tabWidget)
+        self.preview = Preview(self.converter, self.imagePreview, self.previewLineEdit)
         self.set_up_toggles()
         self.set_up_options()
         self.set_up_margin_option()
         self.chooseFileButton.pressed.connect(self.choose_file)
-        self.convertFileButton.pressed.connect(self.convert)
+        self.convertFileButton.pressed.connect(self.converter.convert)
         self.deviceComboBox.setModel(DeviceComboBoxModel())
         self.deviceComboBox.setCurrentIndex(self.options.get_device_index())
         self.deviceComboBox.activated.connect(self.device_changed)
         self.tabWidget.setCurrentIndex(0)
-        self.preview = Preview()
-        self.previewButton.clicked.connect(self.handle_preview_button_clicked)
+        self.previewButton.clicked.connect(self.preview.handle_preview_button_clicked)
 
     def set_up_toggles(self):
         toggles_map = {
@@ -87,37 +88,6 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                                                    "PDF files (*.pdf)")  # TODO change to QDir.homePath()
         self.inputFilePath.setText(file_path)
 
-    def convert(self):
-        # TODO file_path = self.inputFilePath.text()
-        self.logText.clear()
-        file_path = '/home/cst/code/k2pdfopt_PyQt/1.pdf'
-        opt_file_path = '/home/cst/code/k2pdfopt_PyQt/1_k2opt.pdf'
-        parsed_options = self.options.get_parsed_options(self.deviceComboBox)
-
-        print('Converting file {}'.format(file_path))
-        print('Parsed options {}'.format(parsed_options))
-        asyncio.run_coroutine_threadsafe(run_command_on_file(parsed_options, file_path,
-                                                             lambda text: self.logText.appendPlainText(text),
-                                                             lambda status: subprocess.run(
-                                                                 ['xdg-open', opt_file_path])),
-                                         event_loop)
-        self.tabWidget.setCurrentIndex(3)
-
-    def handle_preview_button_clicked(self):
-        self.logText.clear()
-        page = self.previewLineEdit.text()
-        self.imagePreview.setText('Loading preview...')
-        file_path = '/home/cst/code/k2pdfopt_PyQt/1.pdf'
-        parsed_options = self.options.get_parsed_options(self.deviceComboBox)
-        parsed_options.append('-bmp {}'.format(page))
-
-        print('Converting file {}'.format(file_path))
-        print('Parsed options {}'.format(parsed_options))
-        asyncio.run_coroutine_threadsafe(run_command_on_file(parsed_options, file_path,
-                                                             lambda text: self.logText.appendPlainText(text),
-                                                             lambda status: self.imagePreview.setPixmap(self.preview.generate_preview())),
-                                         event_loop)
-
     def device_changed(self, index):
         text = self.deviceComboBox.itemText(index)
         data = self.deviceComboBox.itemData(index, QtCore.Qt.UserRole)
@@ -129,6 +99,6 @@ if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
     event_loop = QEventLoop(app)
     asyncio.set_event_loop(event_loop)
-    window = MainWindow()
+    window = MainWindow(event_loop)
     window.show()
     app.exec_()

@@ -9,8 +9,9 @@ class Options:
     OPTION_TYPE_MARGIN = "MARGIN"
     OPTION_TYPE_DEVICE = "DEVICE"
 
-    def __init__(self):
+    def __init__(self, device_combo_box):
         self.options_json = json.load(open(self.OPTIONS_FILENAME))
+        self.device_combo_box = device_combo_box
 
     def get_device_index(self):
         return self.options_json['-dev']['value']
@@ -41,7 +42,7 @@ class Options:
             self.options_json[argument]['active'] = False
         self.save_options_to_file()
 
-    def get_parsed_options(self, device_combo_box):
+    def get_parsed_options(self):
         parsed_options = []
         for option_name, option_dict in self.options_json.items():
             if option_dict['active']:
@@ -55,7 +56,7 @@ class Options:
                     parsed_options.append(self.get_margin_option_value())
                 elif option_dict['type'] == self.OPTION_TYPE_DEVICE:
                     parsed_options.append(option_name)
-                    parsed_options.append(device_combo_box.itemData(option_dict['value'], QtCore.Qt.UserRole))
+                    parsed_options.append(self.device_combo_box.itemData(option_dict['value'], QtCore.Qt.UserRole))
         return parsed_options
 
     def get_margin_option_value(self):
