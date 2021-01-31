@@ -2,6 +2,8 @@ import asyncio
 import sys
 
 from PyQt5 import QtWidgets, QtCore
+from PyQt5.QtCore import QRegExp
+from PyQt5.QtGui import QRegExpValidator
 from PyQt5.QtWidgets import QFileDialog
 from qasync import QEventLoop
 
@@ -30,6 +32,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.deviceComboBox.activated.connect(self.device_changed)
         self.tabWidget.setCurrentIndex(0)
         self.previewButton.clicked.connect(self.preview.handle_preview_button_clicked)
+        self.set_up_validators()
 
     def set_up_toggles(self):
         toggles_map = {
@@ -82,6 +85,22 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             lambda text: self.options.change_margin_option('right', text))
         self.bottomMarginLineEdit.textChanged.connect(
             lambda text: self.options.change_margin_option('bottom', text))
+
+    def set_up_validators(self):
+        reg_exp_whole_number = QRegExp(r'\d*')
+        whole_number_inputs = [self.maxColumnsLineEdit, self.leftMarginLineEdit, self.topMarginLineEdit,
+                               self.rightMarginLineEdit, self.bottomMarginLineEdit, self.previewLineEdit]
+        for line_edit in whole_number_inputs:
+            line_edit_validator = QRegExpValidator(reg_exp_whole_number, line_edit)
+            line_edit.setValidator(line_edit_validator)
+
+        reg_exp_float = QRegExp(r'[0-9]+.?[0-9]+')
+        resolution_factor_validator = QRegExpValidator(reg_exp_float, self.resolutionFactorLineEdit)
+        self.resolutionFactorLineEdit.setValidator(resolution_factor_validator)
+
+        reg_exp_page_range = QRegExp(r'\d+-?\d*')
+        page_range_validator = QRegExpValidator(reg_exp_page_range, self.pageRangeLineEdit)
+        self.pageRangeLineEdit.setValidator(page_range_validator)
 
     def choose_file(self):
         file_path, _ = QFileDialog.getOpenFileName(self, 'Open file', './', "PDF/DjVu files (*.pdf *.djvu)")
