@@ -1,6 +1,8 @@
 import asyncio
 import subprocess
 
+from PyQt5.QtWidgets import QFileDialog
+
 from utils import run_command_on_file
 
 
@@ -13,9 +15,10 @@ class Converter:
         # TODO file_path = self.inputFilePath.text()
         self.file_path = '/home/cst/code/k2pdfopt_PyQt/1.pdf'
 
-    def convert(self):
-        opt_file_path = '/home/cst/code/k2pdfopt_PyQt/1_k2opt.pdf'
+    def convert(self, opt_file_path):
+        print('Output file path {}'.format(opt_file_path))
         parsed_options = self.options.get_parsed_options()
+        parsed_options.append('-o {}'.format(opt_file_path))
         self.run_coroutine(parsed_options, lambda status: subprocess.run(['xdg-open', opt_file_path]))
         self.tab_widget.setCurrentIndex(3)
 

@@ -24,7 +24,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.set_up_options()
         self.set_up_margin_option()
         self.chooseFileButton.pressed.connect(self.choose_file)
-        self.convertFileButton.pressed.connect(self.converter.convert)
+        self.convertFileButton.pressed.connect(self.convert)
         self.deviceComboBox.setModel(DeviceComboBoxModel())
         self.deviceComboBox.setCurrentIndex(self.options.get_device_index())
         self.deviceComboBox.activated.connect(self.device_changed)
@@ -84,8 +84,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             lambda text: self.options.change_margin_option('bottom', text))
 
     def choose_file(self):
-        file_path, _ = QFileDialog.getOpenFileName(self, 'Open file', './',
-                                                   "PDF files (*.pdf)")  # TODO change to QDir.homePath()
+        file_path, _ = QFileDialog.getOpenFileName(self, 'Open file', './', "PDF/DjVu files (*.pdf *.djvu)")  # TODO change to QDir.homePath()
         self.inputFilePath.setText(file_path)
 
     def device_changed(self, index):
@@ -93,6 +92,10 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         data = self.deviceComboBox.itemData(index, QtCore.Qt.UserRole)
         print('User chose {} which corresponds to {}'.format(text, data))
         self.options.set_device_index(index)
+
+    def convert(self):
+        file_path, _ = QFileDialog.getSaveFileName(self, 'Save file', './', "PDF/DjVu files (*.pdf *.djvu)")
+        self.converter.convert(file_path)
 
 
 if __name__ == "__main__":
