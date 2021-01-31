@@ -1,3 +1,4 @@
+"""This module is a top level GUI controller."""
 import asyncio
 import sys
 
@@ -7,20 +8,22 @@ from PyQt5.QtGui import QRegExpValidator
 from PyQt5.QtWidgets import QFileDialog
 from qasync import QEventLoop
 
-from MainWindow import Ui_MainWindow
-from converter import Converter
-from models.DeviceComboBoxModel import DeviceComboBoxModel
-from options import Options
-from preview import Preview
+from ui.main_window import Ui_MainWindow
+from models.device_combo_box_model import DeviceComboBoxModel
+from utils.options import Options
+from utils.preview import Preview
+from utils.converter import Converter
 
 
 class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
+    """This class is a top level window of application."""
+
     def __init__(self, event_loop):
         QtWidgets.QMainWindow.__init__(self)
         Ui_MainWindow.__init__(self)
         self.setupUi(self)
         self.options = Options(self.device_combo_box)
-        self.converter = Converter(event_loop, self.logText, self.options, self.tab_widget, self.inputFilePath)
+        self.converter = Converter(event_loop, self.logText, self.options, self.inputFilePath)
         self.preview = Preview(self.converter, self.image_preview, self.preview_line_edit)
         self.set_up_toggles()
         self.set_up_options()
@@ -35,6 +38,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.set_up_validators()
 
     def set_up_toggles(self):
+        """Set up toggles states and connect on change functions."""
         toggles_map = {
             '-as': self.autostraighten_check_box,
             '-bp': self.break_after_each_check_box,
@@ -49,12 +53,16 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         for name, checkbox in toggles_map.items():
             checkbox.setChecked(self.options.is_option_active(name))
             checkbox.stateChanged.connect(
-                lambda checked, name=name, checkbox=checkbox: self.options.toggle_changed(checkbox, name))
+                lambda checked, name=name, checkbox=checkbox: self.options.toggle_changed(checkbox,
+                                                                                          name))
 
     def set_up_options(self):
+        """Set up options with input field."""
         options_map = {
-            '-col': {'checkbox': self.max_columns_check_box, 'line_edit': self.max_columns_line_edit},
-            '-dr': {'checkbox': self.resolution_factor_check_box, 'line_edit': self.resolution_factor_line_edit},
+            '-col': {'checkbox': self.max_columns_check_box,
+                     'line_edit': self.max_columns_line_edit},
+            '-dr': {'checkbox': self.resolution_factor_check_box,
+                    'line_edit': self.resolution_factor_line_edit},
             '-p': {'checkbox': None, 'line_edit': self.page_range_line_edit}
         }
         for option_name, option_dict in options_map.items():
@@ -63,13 +71,16 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             if checkbox:
                 checkbox.setChecked(self.options.is_option_active(option_name))
                 checkbox.stateChanged.connect(
-                    lambda checked, option_name=option_name, checkbox=checkbox: self.options.toggle_changed(checkbox,
-                                                                                                            option_name))
+                    lambda checked, option_name=option_name,
+                           checkbox=checkbox: self.options.toggle_changed(checkbox,
+                                                                          option_name))
             line_edit.setText(self.options.get_option_value(option_name))
             line_edit.textChanged.connect(
-                lambda text, option_name=option_name: self.options.change_option_value(option_name, text))
+                lambda text, option_name=option_name: self.options.change_option_value(option_name,
+                                                                                       text))
 
     def set_up_margin_option(self):
+        """Set up margin option."""
         self.crop_margin_check_box.setChecked(self.options.is_option_active('-m'))
         self.left_margin_line_edit.setText(self.options.get_margin_value('left'))
         self.top_margin_line_edit.setText(self.options.get_margin_value('top'))
@@ -87,15 +98,19 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             lambda text: self.options.change_margin_option('bottom', text))
 
     def set_up_validators(self):
+        """Set up validators for input fields."""
         reg_exp_whole_number = QRegExp(r'\d*')
-        whole_number_inputs = [self.max_columns_line_edit, self.left_margin_line_edit, self.top_margin_line_edit,
-                               self.right_margin_line_edit, self.bottom_margin_line_edit, self.preview_line_edit]
+        whole_number_inputs = [self.max_columns_line_edit, self.left_margin_line_edit,
+                               self.top_margin_line_edit,
+                               self.right_margin_line_edit, self.bottom_margin_line_edit,
+                               self.preview_line_edit]
         for line_edit in whole_number_inputs:
             line_edit_validator = QRegExpValidator(reg_exp_whole_number, line_edit)
             line_edit.setValidator(line_edit_validator)
 
         reg_exp_float = QRegExp(r'[0-9]+.?[0-9]+')
-        resolution_factor_validator = QRegExpValidator(reg_exp_float, self.resolution_factor_line_edit)
+        resolution_factor_validator = QRegExpValidator(reg_exp_float,
+                                                       self.resolution_factor_line_edit)
         self.resolution_factor_line_edit.setValidator(resolution_factor_validator)
 
         reg_exp_page_range = QRegExp(r'\d+-?\d*')
@@ -103,18 +118,24 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.page_range_line_edit.setValidator(page_range_validator)
 
     def choose_file(self):
-        file_path, _ = QFileDialog.getOpenFileName(self, 'Open file', './', "PDF/DjVu files (*.pdf *.djvu)")
+        """Allow user to choose file to be converted."""
+        file_path, _ = QFileDialog.getOpenFileName(self, 'Open file', './',
+                                                   "PDF/DjVu files (*.pdf *.djvu)")
         self.inputFilePath.setText(file_path)
 
     def device_changed(self, index):
+        """Handle event when device is changed."""
         text = self.device_combo_box.itemText(index)
         data = self.device_combo_box.itemData(index, QtCore.Qt.UserRole)
         print('User chose {} which corresponds to {}'.format(text, data))
         self.options.set_device_index(index)
 
     def convert(self):
-        file_path, _ = QFileDialog.getSaveFileName(self, 'Save file', './', "PDF/DjVu files (*.pdf *.djvu)")
+        """Allow user to choose save file path and trigger a convert process."""
+        file_path, _ = QFileDialog.getSaveFileName(self, 'Save file', './',
+                                                   "PDF/DjVu files (*.pdf *.djvu)")
         self.converter.convert(file_path)
+        self.tab_widget.setCurrentIndex(3)
 
 
 if __name__ == "__main__":

@@ -1,7 +1,10 @@
+"""Controller for preview tab."""
 from PyQt5.QtGui import QPixmap
 
 
 class Preview:
+    """Controller for preview tab."""
+
     PATH = './k2pdfopt_out.png'
 
     def __init__(self, converter, image_preview, preview_line_edit):
@@ -9,12 +12,13 @@ class Preview:
         self.image_preview = image_preview
         self.preview_line_edit = preview_line_edit
 
-    def generate_preview(self):
+    def set_up_preview(self):
+        """Set up image generated under PATH."""
         image = QPixmap(self.PATH)
-        return image
+        self.image_preview.setPixmap(image)
 
     def handle_preview_button_clicked(self):
+        """Handle preview button click."""
         page = self.preview_line_edit.text()
         self.image_preview.setText('Loading preview...')
-        self.converter.convert_preview_page(page, lambda status: self.image_preview.setPixmap(
-            self.generate_preview()))
+        self.converter.convert_preview_page(page, lambda status: self.set_up_preview())

@@ -1,10 +1,12 @@
+"""This module provides a model for device combo box."""
 from PyQt5 import QtCore
 from PyQt5.QtGui import QStandardItemModel, QStandardItem
 
 
 class DeviceComboBoxModel(QStandardItemModel):
+    """A model for device combo box."""
     def __init__(self):
-        super(DeviceComboBoxModel, self).__init__(0, 1)
+        super().__init__(0, 1)
         devices = [('Select device', ''),
                    ('Kindle 1-5', 'k2'),
                    ('Kindle DX', 'dx'),
@@ -26,7 +28,7 @@ class DeviceComboBoxModel(QStandardItemModel):
                    ('Kobo H2O Full Screen', 'kbh2ofs'),
                    ('Kobo Aura One', 'kao'),
                    ('Nexus 7', 'nex7')]
-        for index, (text, data) in enumerate(devices):
+        for text, data in devices:
             item = QStandardItem(text)
             item.setData(data, QtCore.Qt.UserRole)
             self.appendRow(item)

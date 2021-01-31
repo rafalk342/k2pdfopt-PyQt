@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'MainWindow.ui'
+# Form implementation generated from reading ui file 'main_window.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.2
 #
@@ -12,11 +12,11 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 
 class Ui_MainWindow(object):
-    def setupUi(self, MainWindow):
-        MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(986, 753)
-        MainWindow.setMaximumSize(QtCore.QSize(986, 753))
-        self.centralwidget = QtWidgets.QWidget(MainWindow)
+    def setupUi(self, main_window):
+        main_window.setObjectName("main_window")
+        main_window.setGeometry(QtCore.QRect(0, 0, 986, 753))
+        main_window.setMaximumSize(QtCore.QSize(986, 753))
+        self.centralwidget = QtWidgets.QWidget(main_window)
         self.centralwidget.setObjectName("centralwidget")
         self.verticalLayout = QtWidgets.QVBoxLayout(self.centralwidget)
         self.verticalLayout.setObjectName("verticalLayout")
@@ -211,22 +211,22 @@ class Ui_MainWindow(object):
         self.verticalLayout_8.addWidget(self.scrollArea)
         self.tab_widget.addTab(self.tab_5, "")
         self.verticalLayout.addWidget(self.tab_widget)
-        MainWindow.setCentralWidget(self.centralwidget)
-        self.menubar = QtWidgets.QMenuBar(MainWindow)
+        main_window.setCentralWidget(self.centralwidget)
+        self.menubar = QtWidgets.QMenuBar(main_window)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 986, 22))
         self.menubar.setObjectName("menubar")
-        MainWindow.setMenuBar(self.menubar)
-        self.statusbar = QtWidgets.QStatusBar(MainWindow)
+        main_window.setMenuBar(self.menubar)
+        self.statusbar = QtWidgets.QStatusBar(main_window)
         self.statusbar.setObjectName("statusbar")
-        MainWindow.setStatusBar(self.statusbar)
+        main_window.setStatusBar(self.statusbar)
 
-        self.retranslateUi(MainWindow)
+        self.retranslateUi(main_window)
         self.tab_widget.setCurrentIndex(4)
-        QtCore.QMetaObject.connectSlotsByName(MainWindow)
+        QtCore.QMetaObject.connectSlotsByName(main_window)
 
-    def retranslateUi(self, MainWindow):
+    def retranslateUi(self, main_window):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        main_window.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.inputFilePath.setPlaceholderText(_translate("MainWindow", "File path"))
         self.choose_file_button.setText(_translate("MainWindow", "Choose file"))
         self.deviceLabel.setText(_translate("MainWindow", "Device:"))
