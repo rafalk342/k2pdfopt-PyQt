@@ -18,7 +18,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         Ui_MainWindow.__init__(self)
         self.setupUi(self)
         self.options = Options(self.deviceComboBox)
-        self.converter = Converter(event_loop, self.logText, self.options, self.tabWidget)
+        self.converter = Converter(event_loop, self.logText, self.options, self.tabWidget, self.inputFilePath)
         self.preview = Preview(self.converter, self.imagePreview, self.previewLineEdit)
         self.set_up_toggles()
         self.set_up_options()
@@ -84,7 +84,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             lambda text: self.options.change_margin_option('bottom', text))
 
     def choose_file(self):
-        file_path, _ = QFileDialog.getOpenFileName(self, 'Open file', './', "PDF/DjVu files (*.pdf *.djvu)")  # TODO change to QDir.homePath()
+        file_path, _ = QFileDialog.getOpenFileName(self, 'Open file', './', "PDF/DjVu files (*.pdf *.djvu)")
         self.inputFilePath.setText(file_path)
 
     def device_changed(self, index):
