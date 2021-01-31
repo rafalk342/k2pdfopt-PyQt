@@ -22,7 +22,7 @@
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
-     <widget class="QTabWidget" name="tabWidget">
+     <widget class="QTabWidget" name="tab_widget">
       <property name="currentIndex">
        <number>4</number>
       </property>
@@ -56,7 +56,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="chooseFileButton">
+            <widget class="QPushButton" name="choose_file_button">
              <property name="text">
               <string>Choose file</string>
              </property>
@@ -80,7 +80,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QComboBox" name="deviceComboBox"/>
+            <widget class="QComboBox" name="device_combo_box"/>
            </item>
           </layout>
          </item>
@@ -115,63 +115,63 @@
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_4">
          <item>
-          <widget class="QCheckBox" name="autostraightenCheckBox">
+          <widget class="QCheckBox" name="autostraighten_check_box">
            <property name="text">
             <string>Autostraighten</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QCheckBox" name="breakAfterEachCheckBox">
+          <widget class="QCheckBox" name="break_after_each_check_box">
            <property name="text">
             <string>Break pages after each source page</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QCheckBox" name="colorOutputCheckBox">
+          <widget class="QCheckBox" name="color_output_check_box">
            <property name="text">
             <string>Color output</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QCheckBox" name="landscapeCheckBox">
+          <widget class="QCheckBox" name="landscape_check_box">
            <property name="text">
             <string>Rotate output to landscape</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QCheckBox" name="nativePDFOutputCheckBox">
+          <widget class="QCheckBox" name="native_PDF_output_check_box">
            <property name="text">
             <string>Native PDF output</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QCheckBox" name="rightToLeftCheckBox">
+          <widget class="QCheckBox" name="right_to_left_check_box">
            <property name="text">
             <string>Right to left text</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QCheckBox" name="generateMarkedUpSourceCheckBox">
+          <widget class="QCheckBox" name="generate_marked_up_source_check_box">
            <property name="text">
             <string>Generate marked-up source</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QCheckBox" name="reFlowTextCheckBox">
+          <widget class="QCheckBox" name="re_flow_text_check_box">
            <property name="text">
             <string>Re-flow text</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QCheckBox" name="eraseVerticalLinesCheckBox">
+          <widget class="QCheckBox" name="erase_vertical_lines_check_box">
            <property name="text">
             <string>Erase vertical lines</string>
            </property>
@@ -197,14 +197,14 @@
          <item>
           <layout class="QHBoxLayout" name="horizontalLayout_3">
            <item>
-            <widget class="QCheckBox" name="maxColumnsCheckBox">
+            <widget class="QCheckBox" name="max_columns_check_box">
              <property name="text">
               <string>Max columns</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QLineEdit" name="maxColumnsLineEdit">
+            <widget class="QLineEdit" name="max_columns_line_edit">
              <property name="maximumSize">
               <size>
                <width>100</width>
@@ -221,14 +221,14 @@
          <item>
           <layout class="QHBoxLayout" name="horizontalLayout_4">
            <item>
-            <widget class="QCheckBox" name="resolutionFactorCheckBox">
+            <widget class="QCheckBox" name="resolution_factor_check_box">
              <property name="text">
               <string>Document resolution factor:</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QLineEdit" name="resolutionFactorLineEdit">
+            <widget class="QLineEdit" name="resolution_factor_line_edit">
              <property name="maximumSize">
               <size>
                <width>100</width>
@@ -243,7 +243,7 @@
           </layout>
          </item>
          <item>
-          <widget class="QCheckBox" name="cropMarginCheckBox">
+          <widget class="QCheckBox" name="crop_margin_check_box">
            <property name="text">
             <string>Crop margins:</string>
            </property>
@@ -259,7 +259,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QLineEdit" name="leftMarginLineEdit">
+            <widget class="QLineEdit" name="left_margin_line_edit">
              <property name="maximumSize">
               <size>
                <width>100</width>
@@ -283,7 +283,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QLineEdit" name="rightMarginLineEdit">
+            <widget class="QLineEdit" name="right_margin_line_edit">
              <property name="maximumSize">
               <size>
                <width>100</width>
@@ -307,7 +307,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QLineEdit" name="topMarginLineEdit">
+            <widget class="QLineEdit" name="top_margin_line_edit">
              <property name="maximumSize">
               <size>
                <width>100</width>
@@ -331,7 +331,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QLineEdit" name="bottomMarginLineEdit">
+            <widget class="QLineEdit" name="bottom_margin_line_edit">
              <property name="maximumSize">
               <size>
                <width>100</width>
@@ -355,7 +355,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QLineEdit" name="pageRangeLineEdit">
+            <widget class="QLineEdit" name="page_range_line_edit">
              <property name="maximumSize">
               <size>
                <width>100</width>
@@ -395,7 +395,7 @@
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout_8">
         <item>
-         <widget class="QLineEdit" name="previewLineEdit">
+         <widget class="QLineEdit" name="preview_line_edit">
           <property name="maximumSize">
            <size>
             <width>150</width>
@@ -408,7 +408,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="previewButton">
+         <widget class="QPushButton" name="preview_button">
           <property name="maximumSize">
            <size>
             <width>150</width>
@@ -436,7 +436,7 @@
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_6">
             <item>
-             <widget class="QLabel" name="imagePreview">
+             <widget class="QLabel" name="image_preview">
               <property name="text">
                <string/>
               </property>
