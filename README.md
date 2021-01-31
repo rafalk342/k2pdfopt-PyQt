@@ -21,9 +21,17 @@ cd k2pdfopt-PyQt
 ```
 Then, install the requirements:
 ```shell
-pip install requirements.txt 
+pip install -r requirements.txt 
 ```
 And finally run the program:
 ```shell
 python main.py
+```
+
+## Contributing
+You can use Qt Designer to make changes to the UI. 
+
+To generate python ui file you can use this command:
+```shell
+python -m PyQt5.uic.pyuic ./ui/main_window.ui -o ./ui/main_window.py
 ```
