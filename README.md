@@ -1,6 +1,8 @@
 # k2pdfopt_PyQt
 Gui for k2pdfopt PDF/DJVU files optimizer in PyQt5. 
 
+Demo video: https://drive.google.com/file/d/1hUq_XvkjxM46H_x1nsN1sejTZs5x3zV_/view
+
 ## Requirements
 * Python 3.7+
 
