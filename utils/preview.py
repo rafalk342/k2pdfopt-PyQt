@@ -1,5 +1,8 @@
 """Controller for preview tab."""
 from PyQt5.QtGui import QPixmap
+from PyQt5.QtWidgets import QLabel, QLineEdit
+
+from utils.converter import Converter
 
 
 class Preview:
@@ -7,7 +10,7 @@ class Preview:
 
     PATH = './k2pdfopt_out.png'
 
-    def __init__(self, converter, image_preview, preview_line_edit):
+    def __init__(self, converter: Converter, image_preview: QLabel, preview_line_edit: QLineEdit):
         self.converter = converter
         self.image_preview = image_preview
         self.preview_line_edit = preview_line_edit

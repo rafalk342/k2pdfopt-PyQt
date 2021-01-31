@@ -2,11 +2,12 @@
 import asyncio
 import re
 import subprocess
+from typing import List
 
 ansi_escape = re.compile(r'\x1B(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])')
 
 
-async def run_command_on_file(options, file_path, callback_change, callback_finish):
+async def run_command_on_file(options: List[str], file_path: str, callback_change, callback_finish):
     """Run subprocess in the background and call callback on every new stdout line."""
     cmd = 'k2pdfopt -ui- -x {} {}'.format(' '.join(options), file_path)
     print('Running command {}'.format(cmd))
@@ -36,7 +37,7 @@ class Converter:
         self.options = options
         self.file_path_line_edit = input_file_line_edit
 
-    def convert(self, opt_file_path):
+    def convert(self, opt_file_path: str):
         """Run a conversion coroutine and open file at the end."""
         print('Output file path {}'.format(opt_file_path))
         parsed_options = self.options.get_parsed_options()
@@ -44,14 +45,14 @@ class Converter:
         self.run_coroutine(parsed_options,
                            lambda status: subprocess.run(['xdg-open', opt_file_path], check=False))
 
-    def convert_preview_page(self, page_number, on_finish):
+    def convert_preview_page(self, page_number: int, on_finish):
         """Create a preview page."""
         self.log_text.clear()
         parsed_options = self.options.get_parsed_options()
         parsed_options.append('-bmp {}'.format(page_number))
         self.run_coroutine(parsed_options, on_finish)
 
-    def run_coroutine(self, parsed_options, on_finish):
+    def run_coroutine(self, parsed_options: List[str], on_finish):
         """Run a coroutine in the background."""
         self.log_text.clear()
         print('Converting file {}'.format(self.file_path_line_edit.text()))

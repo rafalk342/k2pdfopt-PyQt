@@ -1,6 +1,9 @@
 """This module handles options."""
 import json
+from typing import List
+
 from PyQt5 import QtCore
+from PyQt5.QtWidgets import QCheckBox
 
 
 class Options:
@@ -15,19 +18,19 @@ class Options:
         self.options_json = json.load(open(self.OPTIONS_FILENAME))
         self.device_combo_box = device_combo_box
 
-    def get_device_index(self):
+    def get_device_index(self) -> int:
         """Return selected device index."""
         return self.options_json['-dev']['value']
 
-    def is_option_active(self, name):
+    def is_option_active(self, name: str) -> bool:
         """Return if option with given name is turned on."""
         return self.options_json[name]['active']
 
-    def get_option_value(self, name):
+    def get_option_value(self, name: str) -> str:
         """Return the value of option with given name."""
         return self.options_json[name]['value']
 
-    def get_margin_value(self, side):
+    def get_margin_value(self, side: str) -> str:
         """Return margin value for given side."""
         return self.options_json['-m'][side]
 
@@ -36,12 +39,12 @@ class Options:
         with open(self.OPTIONS_FILENAME, 'w') as options_file:
             json.dump(self.options_json, options_file, indent=4)
 
-    def change_margin_option(self, side, value):
+    def change_margin_option(self, side: str, value: str):
         """Change margin option for given side."""
         self.options_json['-m'][side] = value
         self.save_options_to_file()
 
-    def toggle_changed(self, checkbox, argument):
+    def toggle_changed(self, checkbox: QCheckBox, argument: str):
         """Handle toggle change."""
         if checkbox.isChecked():
             print('Toggle {} activated'.format(argument))
@@ -51,7 +54,7 @@ class Options:
             self.options_json[argument]['active'] = False
         self.save_options_to_file()
 
-    def get_parsed_options(self):
+    def get_parsed_options(self) -> List[str]:
         """Return a list with parsed options."""
         parsed_options = []
         for option_name, option_dict in self.options_json.items():
@@ -70,20 +73,20 @@ class Options:
                         self.device_combo_box.itemData(option_dict['value'], QtCore.Qt.UserRole))
         return parsed_options
 
-    def get_margin_option_value(self):
+    def get_margin_option_value(self) -> str:
         """Return formatted margin option."""
         return '{}px,{}px,{}px,{}px'.format(self.options_json['-m']['left'],
                                             self.options_json['-m']['top'],
                                             self.options_json['-m']['right'],
                                             self.options_json['-m']['bottom'])
 
-    def set_device_index(self, index):
+    def set_device_index(self, index: int):
         """Set device index."""
         self.options_json['-dev']['value'] = index
         self.options_json['-dev']['active'] = index != 0
         self.save_options_to_file()
 
-    def change_option_value(self, option_name, option_value):
+    def change_option_value(self, option_name: str, option_value: str):
         """Change option value."""
         print('Changing option {} to {}'.format(option_name, option_value))
         self.options_json[option_name]['value'] = option_value

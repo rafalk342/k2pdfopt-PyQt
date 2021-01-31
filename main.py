@@ -6,7 +6,7 @@ from PyQt5 import QtWidgets, QtCore
 from PyQt5.QtCore import QRegExp
 from PyQt5.QtGui import QRegExpValidator
 from PyQt5.QtWidgets import QFileDialog
-from qasync import QEventLoop
+from qasync import QEventLoop  # type: ignore
 
 from ui.main_window import Ui_MainWindow
 from models.device_combo_box_model import DeviceComboBoxModel
@@ -18,7 +18,7 @@ from utils.converter import Converter
 class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     """This class is a top level window of application."""
 
-    def __init__(self, event_loop):
+    def __init__(self, event_loop: QEventLoop):
         QtWidgets.QMainWindow.__init__(self)
         Ui_MainWindow.__init__(self)
         self.setupUi(self)
@@ -123,7 +123,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                                                    "PDF/DjVu files (*.pdf *.djvu)")
         self.inputFilePath.setText(file_path)
 
-    def device_changed(self, index):
+    def device_changed(self, index: int):
         """Handle event when device is changed."""
         text = self.device_combo_box.itemText(index)
         data = self.device_combo_box.itemData(index, QtCore.Qt.UserRole)
